@@ -1,17 +1,47 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <form @submit.prevent="sendInfo">
+      <div>
+        <label>Enter a value:</label>
+        <input
+          type="text"
+          placeholder="Enter a value"
+          v-model="currValue"  @keyup.enter="popUpMessage(currValue)"
+        />
+      </div>
+      <div>
+        <h2>List of entered values</h2>
+        <ul v-show="listOfValues.length">
+          <li v-for="(data, index) in listOfValues" :key="index">
+            <p>{{ data }} @ position {{ index }}</p>
+          </li>
+        </ul>
+      </div>
+      <button type="submit" @click.prevent="sendInfo">Display</button>
+    </form>5
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: "App",
+  data() {
+    return {
+      currValue: '',
+      listOfValues: []
+    }
+  },
+  components: {},
+  methods: {
+    sendInfo() {
+      if(this.currValue)
+        this.listOfValues.push(this.currValue)
+    },
+    popUpMessage(arg) {
+      alert(arg)
+    }
   }
-}
+};
 </script>
 
 <style>
